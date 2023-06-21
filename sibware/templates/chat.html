@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+  {% block head %}
+    <title>{%block title%}Chat{%endblock%}</title>
+	 {{ super() }}
+    <style>
+     div.received {
+     border-radius: 18px;
+     margin-top:6px;
+     background-color:#f0e68c;
+      }
+     div.sent{
+     border-radius: 25px;
+     margin-top:5px;
+     margin-bottom:5px;
+     background-color:#e8f48c;
+     float:right;
+     }
+    </style>
+  {% endblock %}
+ </head>
+ <body>
+ {% block body %}
+<nav class="navbar navbar-expand-lg">
+
+       <div class="container-fluid">
+              <div class="navbar-header">
+                <a class="navbar-brand" href="#">Sibware</a>
+              </div>
+           <ul class="nav navbar-nav">
+           <li class="nav-item">
+           {% if current_user.profile_pic %}
+            {% set picy=current_user.profile_pic %}
+             {% else %}
+           {% set picy="empty.PNG" %}
+           {% endif %}
+                 <img id="tatoo" src="{{url_for('static',filename=picy)}}" name="userppp" class="img-circle" width="50" height="50">
+                 
+             </li>
+           </li>
+           {% if current_user.status==2 %}
+            <li class="active">
+              <a class="nav-link" href="{{url_for('users.user_login')}}">Main</a>
+             </li> 
+           
+           {% else %}
+           
+             <li class="active">
+              <a class="nav-link" href="{{url_for('users.admin_login')}}">Admin Main</a>
+             </li>         
+            {% endif %} 
+
+         <li class="nav-item">
+              <a  class="nav-link" href="{{url_for('users.logout')}}">Logout </a>
+            </li>
+           </ul>
+       </div>
+   </nav>
+   <div class= "row">
+      
+       <div class="col-md-5 col-lg-5 offset-md-5 offset-lg-4">
+       {% for message in incoming_messages %}
+         <div  class='col-md-10 col-lg-10 received' >
+           <p> {{message.first_name}} {{message.surname}}  {{ message.text}}</p>
+           <span><small>{{message.time.strftime('%Y-%m-%d %H:%m')}}</small></span>
+        </div><br/>
+       {% endfor %}
+       {% for message in sent_messages %}
+         <div  class='col-md-10 col-lg-10 sent'>
+           <p> {{message.first_name}} {{message.surname}}  {{ message.text}}</p>
+           <span><small>{{message.time.strftime('%Y-%m-%d %H:%m')}}</small></span>
+        </div><br/> <br/>
+       {% endfor %}
+       <form action="{{url_for('ranking.rank_jobs')}}" id='fom' name="formal" method='POST'>
+        <div class="form-group">
+           <textarea class="form-control" rows="1" cols="100"  placeholder='Enter your message' id="message" name='text'></textarea>
+          </div>
+           <input type='text' name='chat_idy' value='{{chat.id}}' id='chat' hidden />  
+           <input type='text' name='recipient_id' value='{{recipient.id}}' id='recipient'  hidden />                   
+          <button type="submit" class="btn btn-primary">Send Message</button>  
+       </form>  
+       
+      </div>
+      <script>
+
+       $(document).ready(function(){
+                $('#fom').on('submit',function(event){
+                var frm= document.getElementsByName('formal')[0];
+                
+                $.ajax({
+                        data:{
+                            text: $('#message').val(),
+                            recipient_id: $('#recipient').val(),
+                            chat_idy:$('#chat').val(),
+                            
+                        },
+                        type:'POST',
+                        url:"{{url_for('users.send_message')}}"
+                        
+                })
+                .done(function(){
+                
+                });
+                
+                event.preventDefault();
+                frm.reset();
+                                   
+             });
+      });
+     </script>
+    
+   </div>
+ {% endblock %}
+ </body>
+ </html>
+   

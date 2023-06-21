@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+  {% block head %}
+    <title>{%block title%} Welcome std {{current_user_number}} {%endblock%}</title>
+	 {{ super() }}
+  {% endblock %}
+ </head>
+ <body>
+ {% block body %}
+<nav class="navbar navbar-expand-lg">
+
+       <div class="container-fluid">
+              <div class="navbar-header">
+                <a class="navbar-brand" href="#">Sibware</a>
+              </div>
+           <ul class="nav navbar-nav">
+           <li class="nav-item">
+           {% if current_user.profile_pic %}
+            {% set picy=current_user.profile_pic %}
+             {% else %}
+           {% set picy="empty.PNG" %}
+           {% endif %}
+               <form action="{{url_for('users.update_profile_picture')}}" method='POST' enctype="multipart/form-data">
+                 <img id="tatoo" src="{{url_for('static',filename=picy)}}" name="userppp" class="img-circle" width="50" height="50">
+                 <input type="file" id="uploadfilesdo"  name="profile_pic" class="form-control hidden" accept="image/*" hidden />
+                 <input id="nimro" type="submit" class="form-control hidden" value="Upload" hidden />
+               </form>
+             </li>
+           </li>
+             <li class="active">
+              <a class="nav-link" href="{{url_for('users.admin_login')}}">Admin main page</a>
+             </li>         
+             
+          <li class="nav-item">
+          <a  class="nav-link" href="#">User Profile</a>
+          </li>
+         <li class="nav-item">
+              <a  class="nav-link" href="{{url_for('users.logout')}}">Logout </a>
+            </li>
+           </ul>
+            <script>
+           const realFileBtno = document.getElementById("uploadfilesdo");
+           const customBtno = document.getElementById("tatoo");
+           const sumito = document.getElementById("nimro");
+           
+          customBtno.addEventListener("click", function() {
+          realFileBtno.click();
+          });
+          realFileBtno.addEventListener("change", function() {
+                if (realFileBtno.value) {
+                    sumito.click();
+           } });
+           
+  </script>
+       </div>
+   </nav>
+ <div class='row'>
+   <div class='col-md-1 col-lg-1'>
+   </div>
+   <div class='col-md-10 col-lg-10'>
+   <p>{{current_user.first_name  }}{{current_user.surname}} 
+   		   
+               <p><img width='150' height='150' src="{{ url_for('static',filename=current_user.profile_pic) }}"/></p>
+		   
+     <table class="table">
+         <thead>
+           <tr>
+               <th>Enquiry</th>
+               <th>Details</th>
+           </tr>
+         </thead>
+         <tbody>
+
+		   <tr>
+               <td>Gender</td>
+               <td>{{ current_user.gender }}</td>
+		   </tr>
+		   <tr>
+               <td>First name</td>
+               <td>{{ current_user.first_name }}</td>
+		   </tr>
+		   <tr>
+               <td>Second name</td>
+               <td>{{ current_user.second_name }}</td>
+		  </tr>
+		  <tr>
+               <td>Surname</td>
+               <td>{{ current_user.surname }}</td>
+		 </tr>
+	 <tr>
+               <td>Email address</td>
+               <td>{{ current_user.email_address}}</td>
+		 </tr>
+		 <tr>
+               <td>Phone number </td>
+               <td>{{ current_user.phone_number}}</td>
+		 </tr>
+		 <tr>
+               <td>Physical Address</td>
+               <td>{{ current_user.physical_address }}</td>
+		</tr>
+                 
+		 </tbody>
+	</table>	 
+   </div>
+   <div class='col-md-1 col-lg-1'>
+   </div>
+</div> 
+{% endblock %}
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+   <html>
+      <head>
+        {% block head %}
+         <title>{%block title%} Sibware {%endblock%}</title>
+         <meta charset="utf-8">
+         <meta name="viewport" content="width=device-width, initial-scale=1">
+         <link rel="stylesheet" href="{{url_for('static',filename='bootstrap-4.3.1-dist/css/bootstrap.min.css')}}">
+         <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='bootstrap-4.3.1-dist/css/bootstrap.css') }}">
+        <script src="{{ url_for('static',filename='bootstrap-4.3.1-dist/js/bootstrap.bundle.js')}}"></script> 
+        <script src="{{ url_for('static',filename='bootstrap-4.3.1-dist/js/bootstrap.js')}}"></script> 
+        <script src="{{ url_for('static',filename='bootstrap-4.3.1-dist/js/bootstrap.min.js')}}"></script> 
+		
+        <link rel="stylesheet" href="{{url_for('static',filename='major_lextra_files/w3.css')}}">
+        <script src="{{url_for('static',filename='major_lextra_files/jquery-3.6.0.min.js')}}"> </script>
+        <script src="{{url_for('static',filename='major_lextra_files/jquery-3.6.0.min.map')}}"> </script>
+       <style>
+         body {
+       font-family: 'Libre Bodoni';
+       font-size: 18px;
+        background-color:#88bdbc;
+       }
+       .navbar {
+         font-family: 'Libre Bodoni';
+         background-color:#6e6658;
+       }
+     
+     </style>
+
+      {% endblock %}
+     </head>
+    <body>
+   {% block body %}
+        <nav class="navbar navbar-expand-lg">
+          <div class="container-fluid">
+              <div class="navbar-header">
+                <a class="navbar-brand" href="#">Sibware</a>
+           </div>
+           <ul class="nav navbar-nav">
+              <li class="active"></li>
+            <li><a href="#"></a></li>
+            </ul>
+          </nav>
+ <div class="pr row">
+         {% with messages = get_flashed_messages() %}
+           {% if messages %}
+              <ul class='flashes'>
+               {% for message in messages %}
+                    <li class='text-danger'>{{ message }}</li>
+                 {% endfor %}
+                 </ul>
+             {% endif %}
+      
+        {% endwith %}
+          
+      <div class='col-md-4'></div>    
+              <div class="col-md-4 col-lg-4">
+                <h4> Login to  get started !</h4>
+                  <form action="{{url_for('users.home')}}" method="POST">
+                  {{ form.csrf_token }}
+                   {{ form.email_address.label}} {{form.email_address (class="form-control")}} </br>
+                   {{form.password.label}} {{form.password (class="form-control")}} </br>
+                   {{ form.submit (class="btn btn-primary btn-block")}}   
+                  </form> 
+            <p>Not yet registered ?<a href="{{url_for('users.user_register')}}">Register Now</a></p>                 
+            </div>
+         
+  <div class='col-md-4'></div>    
+</div>
+     {% endblock %} 
+    </body>
+</html>

@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+  {% block head %}
+    <title>{%block title%} Job Ranking {%endblock%}</title>
+	 {{ super() }}
+  {% endblock %}
+ </head>
+ <body>
+ {% block body %}
+<nav class="navbar navbar-expand-lg">
+
+       <div class="container-fluid">
+              <div class="navbar-header">
+                <a class="navbar-brand" href="#">Sibware</a>
+              </div>
+           <ul class="nav navbar-nav">
+           <li class="nav-item">
+           {% if current_user.profile_pic %}
+            {% set picy=current_user.profile_pic %}
+             {% else %}
+           {% set picy="empty.PNG" %}
+           {% endif %}
+               <form action="{{url_for('users.update_profile_picture')}}" method='POST' enctype="multipart/form-data">
+                 <img id="tatoo" src="{{url_for('static',filename=picy)}}" name="userppp" class="rounded-circle" width="50" height="50">
+                 <input type="file" id="uploadfilesdo"  name="profile_pic" class="form-control hidden" accept="image/*" hidden />
+                 <input id="nimro" type="submit" class="form-control hidden" value="Upload" hidden />
+               </form>
+             </li>
+           </li>
+             <li class="active">
+              <a class="nav-link" href="{{url_for('users.user_login')}}">User main page</a>
+             </li>         
+             
+
+         <li class="nav-item">
+              <a  class="nav-link" href="{{url_for('users.logout')}}">Logout </a>
+            </li>
+           </ul>
+            <script>
+           const realFileBtno = document.getElementById("uploadfilesdo");
+           const customBtno = document.getElementById("tatoo");
+           const sumito = document.getElementById("nimro");
+           
+          customBtno.addEventListener("click", function() {
+          realFileBtno.click();
+          });
+          realFileBtno.addEventListener("change", function() {
+                if (realFileBtno.value) {
+                    sumito.click();
+           } });
+           
+  </script>
+       </div>
+   </nav>
+   <div class= "pr row">
+      <div class="col-md-2 col-lg-2">
+      <h4>Your primary rank</h4>
+         <p>{{current_user.id}}</p>
+      </div>
+       <div class="col-md-8 col-lg-8">
+          <h4>Welcome {{current_user.first_name}} {{current_user.surname}} to Sibware Inc</h4>
+          <p> Your points {{overall_grade}}</p>
+         <table class="table">
+            <thead>
+                <th>
+                    <tr>
+                        <td>Rank</td>
+                        <td>Job</td>
+                        <td>Job Rating</td>
+                        <td>Apply now</td>
+                    </tr>                    
+                </th>
+            </thead>
+            <tbody>
+              {% for job in jobs %}
+                 <tr>
+                     <td>{{loop.index}}</td>
+                     <td>{{job[0]}}</td>
+                     <td> {{job[1]}}</td>
+                     <td>yes</td>
+                 </tr>
+              {% endfor %}
+            </tbody>
+         </table>
+      </div>
+      <div class="col-md-2 col-lg-2">
+        <h4>Occupational rank? </h4>
+      </div>
+   </div>
+ {% endblock %}
+ </body>
+ </html>
+   

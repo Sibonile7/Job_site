@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+  {% block head %}
+    <title>{%block title%}View user details {%endblock%}</title>
+	 {{ super() }}
+  {% endblock %}
+ </head>
+ <body>
+ {% block body %}
+<nav class="navbar navbar-expand-lg">
+
+       <div class="container-fluid">
+              <div class="navbar-header">
+                <a class="navbar-brand" href="#">Sibware</a>
+              </div>
+           <ul class="nav navbar-nav">
+          
+           </li>
+             <li class="active">
+              <a class="nav-link" href="{{url_for('users.admin_login')}}">Main</a>
+             </li>         
+             
+ 
+         <li class="nav-item">
+              <a  class="nav-link" href="{{url_for('users.logout')}}">Logout </a>
+            </li>
+           </ul>
+       </div>
+   </nav>
+ <div class='row'>
+   <div class='col-md-1 col-lg-1'>
+   </div>
+   <div class='col-md-10 col-lg-10'>
+   <p>{{user.first_name}} {{user.surname}} </p>
+   		   
+               <p><img width='150' height='150' src="{{ url_for('static',filename=user.profile_pic) }}"/></p>
+		   
+     <table class="table">
+         <thead>
+           <tr>
+               <th>Enquiry</th>
+               <th>Details</th>
+           </tr>
+         </thead>
+         <tbody>
+
+		   <tr>
+               <td>Gender</td>
+               <td>{{ user.gender }}</td>
+		   </tr>
+		   <tr>
+               <td>First name</td>
+               <td>{{ user.first_name }}</td>
+		   </tr>
+		   <tr>
+               <td>Second name</td>
+               <td>{{ user.second_name }}</td>
+		  </tr>
+		  <tr>
+               <td>Surname</td>
+               <td>{{ user.surname }}</td>
+		 </tr>
+	     <tr>
+               <td>Qualification</td>
+               <td>{{ user.security_answer}}</td>
+		 </tr>
+       <tr>
+               <td>Email address</td>
+               <td>{{ user.email_address}}</td>
+		 </tr>
+		 <tr>
+               <td>Phone number </td>
+               <td>{{ user.phone_number}}</td>
+		 </tr>
+       <tr>
+               <td>Date Of Birth </td>
+               <td>{{ user.date_of_birth}}</td>
+		 </tr>
+		 <tr>
+               <td>Physical Address</td>
+               <td>{{ user.physical_address }}</td>
+		</tr>
+                 
+		 </tbody>
+	</table>	 
+   </div>
+   <div class='col-md-1 col-lg-1'>
+   </div>
+</div> 
+{% endblock %}
+</body>
+</html>

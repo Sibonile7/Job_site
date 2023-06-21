@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+  {% block head %}
+    <title>{%block title%} Registration {%endblock%}</title>
+	 {{ super() }}
+  {% endblock %}
+ </head>
+ <body>
+ {% block body %}
+<nav class="navbar navbar-expand-lg">
+
+          <div class="container-fluid">
+              <div class="navbar-header">
+                <a class="navbar-brand" href="#">Fairod</a>
+           </div>
+           <ul class="nav navbar-nav">
+            <li class="active"><a href="#"></a></li>
+           <li><a href="#"></a></li>
+           <li><a href="#"></a></li>
+           {% if form1 %}
+           <li><a href="{{url_for('users.register')}}">Register to join?</a></li>
+           {% else %}
+            <li> </li >
+           {% endif %}
+           </ul>
+       </div>
+   </nav>
+   {% if form %}
+    <div class="container">  
+     {% with messages = get_flashed_messages() %}
+           {% if messages %}
+              <ul class='flashes'>
+               {% for message in messages %}
+                    <li class='text-danger'>{{ message }}</li>
+                 {% endfor %}
+                 </ul>
+             {% endif %}
+      
+        {% endwith %}
+  
+ <div class= "pr row">
+              <p> Welcome to fairod where you get infromatics about the product you wanna buy with a touch of magic </p>
+    
+           <div class="row col-md-4 col-sm-10 col-lg-offset-4 col-md-offset-4" >
+            <div class="card">
+              <h5 class="card-header">Sign up to join!</h5>
+             
+              <div class="card-body ">
+             
+                <form action="{{url_for('user.register')}}" method="POST">
+                   {{ form.csrf_token }}
+                <div class="form-group">
+                  {{ form.email.label }} {{form.email (class="form-control")}}
+                </div>
+                 <div class="form-group">
+                  {{ form.firstname.label }} {{form.firstname (class="form-control")}}
+                </div>
+                <div class="form-group">
+                  {{ form.surname.label }} {{form.surname (class="form-control")}}
+                </div>
+                <div class="form-group">
+                  {{ form.password.label }} {{form.password (class="form-control")}}
+                </div>
+                 <div class="form-group">
+                  {{ form.confirm_password.label }} {{form.confirm_password (class="form-control")}}
+                </div>
+                <div class="form-group">
+                   {{ form.dob.label }} {{form.dob (class="form-control")}} 
+                </div>
+                <div class="d-flex justify-content-around">
+                {% for subfield in form.gender %}
+                  {{ subfield.label (class="form-check-label")}} {{subfield (class="form-check-input")}}
+                {% endfor %}
+                </div>
+                
+               <div class="form-group">
+                    {{form.submit (class="btn btn-primary btn-block")}} 
+               </div>
+                
+         </form>
+         </div>
+        </div>
+      </div>
+   {% endif %}
+      {% if form1 %}
+      <div class="container">
+       
+           <div class="row col-md-4 col-sm-10 col-lg-4 col-lg-offset-4 col-md-offset-4" >
+            <div class="card">
+              <h5 class="card-header">Login</h5>
+             
+              <div class="card-body ">      
+                <form  action= "{{url_for('users.login')}}" method="POST">
+                    {{form1.csrf_token}}
+                  <div class="form-group">
+                    {{form1.email.label}} {{form1.email (class="form-control")}}
+                  </div>
+                   <div class="form-group">
+                    {{form1.password.label}} {{form1.password (class="form-control")}}
+                   </div>
+                   <div class="form-group">
+                    {{form1.submit (class="btn btn-primary btn-block")}}
+                   </div>
+                </form>
+             </div>
+            </div>
+           </div>
+           {% endif %}
+</div>       
+         {% endblock %} 
+  </body>
+</html>

@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+  {% block head %}
+    <title>{%block title%} Welcome std {{student_number}} {%endblock%}</title>
+	 {{ super() }}
+  {% endblock %}
+ </head>
+ <body>
+ {% block body %}
+<nav class="navbar navbar-expand-lg">
+
+       <div class="container-fluid">
+              <div class="navbar-header">
+                <a class="navbar-brand" href="#">Sibware</a>
+              </div>
+           <ul class="nav navbar-nav">
+           <li class="nav-item">
+           {% if current_user.profile_pic %}
+            {% set picy=current_user.profile_pic %}
+             {% else %}
+           {% set picy="empty.PNG" %}
+           {% endif %}
+               <form action="{{url_for('users.update_profile_picture')}}" method='POST' enctype="multipart/form-data">
+                 <img id="tatoo" src="{{url_for('static',filename=picy)}}" name="userppp" class="rounded-circle" width="50" height="50">
+                 <input type="file" id="uploadfilesdo"  name="profile_pic" class="form-control hidden" accept="image/*" hidden />
+                 <input id="nimro" type="submit" class="form-control hidden" value="Upload" hidden />
+               </form>
+             </li>
+           </li>
+         <li class="active">
+              <a class="nav-link" href="{{url_for('users.messaging')}}">Messages</a>
+          </li>                
+             
+          <li class="nav-item">
+          <a  class="nav-link" href="{{url_for('users.user_profile')}}">User Profile</a>
+          </li>
+         <li class="nav-item">
+              <a  class="nav-link" href="{{url_for('users.logout')}}">Logout </a>
+            </li>
+           </ul>
+            <script>
+           const realFileBtno = document.getElementById("uploadfilesdo");
+           const customBtno = document.getElementById("tatoo");
+           const sumito = document.getElementById("nimro");
+           
+          customBtno.addEventListener("click", function() {
+          realFileBtno.click();
+          });
+          realFileBtno.addEventListener("change", function() {
+                if (realFileBtno.value) {
+                    sumito.click();
+           } });
+           
+  </script>
+       </div>
+   </nav>
+   <div class= "pr row">
+      <div class="col-md-3 col-lg-3">
+      <h4>Your Registration rank</h4>
+         <p>{{current_user.id}}</p>
+      </div>
+       <div class="col-md-6 col-lg-6">
+          <h4>Welcome {{current_user.first_name}} {{current_user.surname}} to Sibware Inc</h4>
+           <form action="{{url_for('ranking.rank_jobs')}}" method='POST'>
+             <div class="form-group">
+               <label for="degree_programs">Select the program you did:</label>
+                 <select name="degree_program" id="degree_programs">
+                     <option value="Computer Science">Computer Science</option>
+                     <option value="Software Engineering">Software Engineering</option>
+                     <option value="Information and Technology">Information and Technology</option>
+                     <option value="Computer Engineering">Computer Engineering</option>
+                 </select> 
+           </div>
+           <div class="form-group">
+           <label for="occupation">Choose a Field:</label>
+                 <select name="occupation" id="occupation">
+                     <option value="Systems Programming">Systems Programming</option>
+                     <option value="Web Development">Web Development</option>
+                     <option value="Mobile Application development">Mobile Application development</option>
+                     <option value="Embedded Systems Programming">Embedded Systems Programming</option>
+                 </select> 
+           </div>
+           <div class="form-group">
+             <label for="pl">Main programming Language</label>
+             <input type="text" name='pl' id="pl">
+           </div>
+          <button type="submit" class="btn btn-primary">Get a job Rank</button>  
+        </form>   
+      </div>
+      <div class="col-md-3 col-lg-3">
+        <h4>Occupational rank? </h4>
+      </div>
+   </div>
+ {% endblock %}
+ </body>
+ </html>
+   
+   
